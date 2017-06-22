@@ -62,3 +62,28 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.timer-body {
+  width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.timer-body p {
+  margin-top: 150px;
+  font-size: 48px;
+}
+
+.timer-body ul {
+  margin: 0;
+  padding: 0;
+}
+
+.timer-body ul li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+}
+</style>
