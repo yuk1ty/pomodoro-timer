@@ -2,6 +2,19 @@
 
 > pomodoro timer with vue.js
 
+## Original Pomodoro Timer
+
+I've created a simple timer for pomodoro technique. You can use the timer here, https://pomodoro-tomato-timer.herokuapp.com/.
+
+## Requirements
+
+Modern browsers.
+
+## Future Plan
+
+* If the state of timer becomes "break", change its background color like blue gradient.
+* Desktop notifications, sounds.
+
 ## Build Setup
 
 ``` bash
