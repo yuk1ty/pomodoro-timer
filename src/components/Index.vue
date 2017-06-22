@@ -24,16 +24,16 @@ export default {
 
 <style scoped>
 header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
   display: flex;
-  background: #2c3e50;
 }
 
 header h1 {
   margin: 0;
   padding: 30px;
   font-size: 18px;
-  color: #ecf0f1;
+  color: #fff;
   font-weight: normal;
 }
 
@@ -49,6 +49,6 @@ header ul {
 
 header li {
   list-style: none;
-  color: #ecf0f1;
+  color: #fff;
 }
 </style>
