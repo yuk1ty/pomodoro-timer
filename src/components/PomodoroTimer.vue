@@ -2,29 +2,46 @@
   <div class="timer-body">
     <p>{{ time }}</p>
     <ul>
-      <li><button @click="start()" :disabled="enableToStart">Start</button></li>
+      <li v-if="normal"><button @click="start()">Start</button></li>
+      <li v-else>
+        <button @click="resume()" v-if="isPaused">Resume</button>
+        <button @click="pause()" v-else>Pause</button>
+      </li>
       <li><button @click="stop()">Stop</button></li>
     </ul>
   </div>
 </template>
 
 <script>
+import { State, getLimitTime, displayDefaultTime, nextState, handleCounting } from '@/js/TimerHandler'
+import { handleRequestPermission, pushNotification } from '@/js/NotificationHandler'
+
 export default {
+  // TODO must use Vuex
   data () {
     return {
-      time: '00:00',
-      timerId: '',
-      isBreak: false,
-      enableToStart: false
+      state: 0,
+      loopCounter: 0,
+      normal: true,
+      isPaused: false,
+      time: this.setTimer(),
+      timerId: ''
     }
   },
   methods: {
+    setTimer: function() {
+      this._setup()
+      return displayDefaultTime(this.state)
+    },
     start: function() {
       const self = this
+      let secs = getLimitTime(this.state)
+      if (this.state === State.WORKING) {
+        this.loopCounter++
+      }
 
-      self.enableToStart = true
+      this.normal = false
 
-      let secs = self.isBreak ? 5 * 60 : 25 * 60
       self.timerId = window.setInterval(() => {
         secs--
         let m = Math.floor(secs / 60)
@@ -45,20 +62,38 @@ export default {
       }, 1000)
     },
     stop: function() {
-      this.enableToStart = false
       this._clearTimer()
     },
-    _clearTimer: function() {
-      this.time = "00:00"
-      this.isBreak = this._reverse(this.isBreak)
-      window.clearInterval(this.timerId)
+    pause: function() {
+      this.isPaused = true
     },
-    _reverse: function(bool) {
-      return bool ? false : true
+    resume: function() {
+      this.isPaused = false
+      this.normal = true
+    },
+    _setup: function() {
+      if (typeof this.state === 'undefined') {
+        this.state = State.WORKING
+      }
+    },
+    _clearTimer: function() {
+      if (this.state === State.WORKING) {
+        pushNotification("Take a Break!")
+      } else if (this.state === State.BREAK || this.state === State.LONG_BREAK) {
+        pushNotification("Work!")
+      }
+      
+      this.state = nextState(this.state, this.loopCounter)
+      this.time = this.setTimer()
+      this.normal = true
+      window.clearInterval(this.timerId)
     }
   },
   beforeDestroy() {
-    this._clearTimer()
+    window.clearInterval(this.timerId)
+  },
+  created: function() {
+    handleRequestPermission()
   }
 }
 </script>
