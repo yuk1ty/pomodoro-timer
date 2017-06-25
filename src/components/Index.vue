@@ -51,4 +51,8 @@ header li {
   list-style: none;
   color: #fff;
 }
+
+#pomodoro-timer {
+  height: 100%;
+}
 </style>

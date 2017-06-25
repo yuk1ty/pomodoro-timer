@@ -1,14 +1,12 @@
 <template>
   <div class="timer-body">
-    <p>{{ time }}</p>
-    <ul>
-      <li v-if="normal"><button @click="start()">Start</button></li>
-      <li v-else>
-        <button @click="resume()" v-if="isPaused">Resume</button>
-        <button @click="pause()" v-else>Pause</button>
-      </li>
-      <li><button @click="stop()">Stop</button></li>
-    </ul>
+    <div>
+      <p>{{ time }}</p>
+      <ul>
+        <li><button @click="start()">Start</button></li>
+        <li><button @click="stop()">Stop</button></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -22,8 +20,6 @@ export default {
     return {
       state: 0,
       loopCounter: 0,
-      normal: true,
-      isPaused: false,
       time: this.setTimer(),
       timerId: ''
     }
@@ -39,8 +35,6 @@ export default {
       if (this.state === State.WORKING) {
         this.loopCounter++
       }
-
-      this.normal = false
 
       self.timerId = window.setInterval(() => {
         secs--
@@ -64,13 +58,6 @@ export default {
     stop: function() {
       this._clearTimer()
     },
-    pause: function() {
-      this.isPaused = true
-    },
-    resume: function() {
-      this.isPaused = false
-      this.normal = true
-    },
     _setup: function() {
       if (typeof this.state === 'undefined') {
         this.state = State.WORKING
@@ -85,7 +72,6 @@ export default {
 
       this.state = nextState(this.state, this.loopCounter)
       this.time = this.setTimer()
-      this.normal = true
       window.clearInterval(this.timerId)
     }
   },
@@ -141,13 +127,15 @@ button:hover {
 }
 
 .timer-body {
-  width: 960px;
+  height: auto;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .timer-body p {
-  margin-top: 150px;
   font-size: 72px;
   color: #fff;
 }

@@ -5,9 +5,7 @@ export const TICKING_INTERVAL = 1000
 export const State = {
   WORKING: 0,
   BREAK: 1,
-  LONG_BREAK: 2,
-  PAUSE: 3,
-  RESUME: 4
+  LONG_BREAK: 2
 }
 
 const WORKING_TIMES = { workingTime: 25 * 60, breakTime: 5 * 60, longTermBreakTime: 15 * 60 }

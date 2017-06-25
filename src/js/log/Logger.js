@@ -8,7 +8,7 @@ const Level = {
 
 function _log(message, level) {
   if (!DEBUG_MODE) {
-    return;
+    return
   }
 
   switch(level) {
