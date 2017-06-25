@@ -17,9 +17,9 @@ function getLimitTime(state) {
     case State.WORKING:
       return logger.getValueAndLogging(WORKING_TIMES.workingTime, "time (working): ")
     case State.BREAK:
-      return logger.getValueAndLoggng(WORKING_TIMES.breakTime, "time (break): ")
+      return logger.getValueAndLogging(WORKING_TIMES.breakTime, "time (break): ")
     case State.LONG_BREAK:
-      return logger.getValueAndLoggng(WORKING_TIMES.longTermBreakTime, "time (long-break): ")
+      return logger.getValueAndLogging(WORKING_TIMES.longTermBreakTime, "time (long-break): ")
     default:
       logger.error("Illegal Argument (state): " + state)
       return 0
