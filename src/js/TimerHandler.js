@@ -1,3 +1,7 @@
+import logger from './log/Logger'
+
+export const TICKING_INTERVAL = 1000
+
 export const State = {
   WORKING: 0,
   BREAK: 1,
@@ -11,12 +15,13 @@ const WORKING_TIMES = { workingTime: 25 * 60, breakTime: 5 * 60, longTermBreakTi
 function getLimitTime(state) {
   switch(state) {
     case State.WORKING:
-      return WORKING_TIMES.workingTime
+      return logger.getValueAndLogging(WORKING_TIMES.workingTime, "time (working): ")
     case State.BREAK:
-      return WORKING_TIMES.breakTime
+      return logger.getValueAndLoggng(WORKING_TIMES.breakTime, "time (break): ")
     case State.LONG_BREAK:
-      return WORKING_TIMES.longTermBreakTime
+      return logger.getValueAndLoggng(WORKING_TIMES.longTermBreakTime, "time (long-break): ")
     default:
+      logger.error("Illegal Argument (state): " + state)
       return 0
   }
 }
@@ -36,13 +41,14 @@ function displayDefaultTime(state) {
 
 function nextState(state, loopCounter) {
   const isLongBreak = loopCounter % 4 === 0
-  console.log("counter = " + loopCounter + ", isLongBreak = " + isLongBreak)
+  logger.info("counter = " + loopCounter + ", isLongBreak = " + isLongBreak)
+
   if (state === State.WORKING) {
     return isLongBreak ? State.LONG_BREAK : State.BREAK
   } else if (state === State.BREAK || state === State.LONG_BREAK) {
     return State.WORKING
   } else {
-    console.log("Illegal Argument (state): " + state)
+    logger.error("Illegal Argument (state): " + state)
     return State.WORKING
   }
 }

@@ -17,7 +17,8 @@
     "mini-toastr": "^0.6.5",
     "vue": "^2.3.3",
     "vue-notifications": "^0.8.0",
-    "vue-router": "^2.3.1"
+    "vue-router": "^2.3.1",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { State, getLimitTime, displayDefaultTime, nextState, handleCounting } from '@/js/TimerHandler'
+import { TICKING_INTERVAL, State, getLimitTime, displayDefaultTime, nextState, handleCounting } from '@/js/TimerHandler'
 import { handleRequestPermission, pushNotification } from '@/js/NotificationHandler'
 
 export default {
@@ -59,7 +59,7 @@ export default {
         if (secs === 0) {
           self._clearTimer()
         }
-      }, 1000)
+      }, TICKING_INTERVAL)
     },
     stop: function() {
       this._clearTimer()
@@ -82,7 +82,7 @@ export default {
       } else if (this.state === State.BREAK || this.state === State.LONG_BREAK) {
         pushNotification("Work!")
       }
-      
+
       this.state = nextState(this.state, this.loopCounter)
       this.time = this.setTimer()
       this.normal = true
